@@ -6,7 +6,7 @@ pipeline {
             steps {
                 dir('configserver-service') {
                     withMaven(maven : 'MAVEN_HOME')   {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
@@ -16,7 +16,7 @@ pipeline {
             steps {
                 dir('service-registry') {
                     withMaven(maven : 'MAVEN_HOME')   {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 dir('flight-service') {
                     withMaven(maven : 'MAVEN_HOME')  {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
@@ -47,7 +47,7 @@ pipeline {
             steps {
                 dir('payment-microservice') {
                    withMaven(maven : 'MAVEN_HOME')   {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
@@ -57,7 +57,7 @@ pipeline {
             steps {
                 dir('api-gateway') {
                     withMaven(maven : 'MAVEN_HOME') {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
