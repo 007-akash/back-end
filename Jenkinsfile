@@ -10,7 +10,7 @@ pipeline {
         stage('Config Service') {
             steps {
                 dir('configserver-service') {
-                    script {
+                    withMaven(maven : 'M2_HOME')  {
                         bat 'mvn clean install'
                     }
                 }
@@ -20,7 +20,7 @@ pipeline {
         stage('Service Registry') {
             steps {
                 dir('service-registry') {
-                    script {
+                    withMaven(maven : 'M2_HOME')  {
                         bat 'mvn clean install'
                     }
                 }
@@ -31,7 +31,7 @@ pipeline {
         stage('Build and Test Flight MicroService') {
             steps {
                 dir('flight-service') {
-                    script {
+                    withMaven(maven : 'M2_HOME') {
                         bat 'mvn clean install'
                     }
                 }
@@ -41,7 +41,7 @@ pipeline {
         stage('Build and Test Booking MicroService') {
             steps {
                 dir('booking-service') {
-                    script {
+                    withMaven(maven : 'M2_HOME')  {
                         bat 'mvn clean install'
                     }
                 }
@@ -51,7 +51,7 @@ pipeline {
         stage('Build and Test Payment MicroService') {
             steps {
                 dir('payment-microservice') {
-                    script {
+                   withMaven(maven : 'M2_HOME')  {
                         bat 'mvn clean install'
                     }
                 }
@@ -61,7 +61,7 @@ pipeline {
         stage('API Gateway') {
             steps {
                 dir('api-gateway') {
-                    script {
+                    withMaven(maven : 'M2_HOME')  {
                         bat 'mvn clean install'
                     }
                 }
