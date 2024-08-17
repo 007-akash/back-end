@@ -1,10 +1,5 @@
 pipeline {
     agent any
-    
-    tools {
-        // Use the Maven installed on your machine
-        maven 'Maven'
-    }
 
     stages { 
         stage('Config Service') {
