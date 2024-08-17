@@ -9,10 +9,31 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from your Git
-                git 'https://your-git-repo-url.git'
+                git url: 'https://github.com/007-akash/back-end.git', branch: 'main'
             }
         }
         
+        stage('Config Service') {
+            steps {
+                dir('configserver-service') {
+                    script {
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+
+        stage('Service Registry') {
+            steps {
+                dir('service-registry') {
+                    script {
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+
+
         stage('Build and Test Flight MicroService') {
             steps {
                 dir('flight-service') {
@@ -36,6 +57,16 @@ pipeline {
         stage('Build and Test Payment MicroService') {
             steps {
                 dir('payment-microservice') {
+                    script {
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+
+        stage('API Gateway') {
+            steps {
+                dir('api-gateway') {
                     script {
                         sh 'mvn clean install'
                     }
