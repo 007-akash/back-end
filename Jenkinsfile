@@ -1,23 +1,17 @@
 pipeline {
     agent any
     
-    environment {
-        JAVA_HOME = tool name: 'JDK 17', type: 'jdk'
+    tools {
+        // Use the Maven installed on your machine
+        maven 'Maven'
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the code from your Git
-                git url: 'https://github.com/007-akash/back-end.git', branch: 'main'
-            }
-        }
-        
+    stages { 
         stage('Config Service') {
             steps {
                 dir('configserver-service') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
@@ -27,7 +21,7 @@ pipeline {
             steps {
                 dir('service-registry') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
@@ -38,7 +32,7 @@ pipeline {
             steps {
                 dir('flight-service') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
@@ -48,7 +42,7 @@ pipeline {
             steps {
                 dir('booking-service') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
@@ -58,7 +52,7 @@ pipeline {
             steps {
                 dir('payment-microservice') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
@@ -68,7 +62,7 @@ pipeline {
             steps {
                 dir('api-gateway') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
