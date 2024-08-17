@@ -1,3 +1,5 @@
+/.metadata/
+
 # Ignore Maven and Gradle directories
 target/
 build/

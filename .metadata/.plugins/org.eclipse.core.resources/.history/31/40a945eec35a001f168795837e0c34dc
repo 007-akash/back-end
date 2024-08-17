@@ -1,5 +1,0 @@
-package com.wipro.flightms.model;
-
-public class ErrorResponse {
-
-}

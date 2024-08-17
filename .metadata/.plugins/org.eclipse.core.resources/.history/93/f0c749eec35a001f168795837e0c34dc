@@ -1,7 +1,0 @@
-package com.wipro.flightms.model;
-
-public class ErrorResponse {
-	private boolean status;
-	private String message;
-
-}

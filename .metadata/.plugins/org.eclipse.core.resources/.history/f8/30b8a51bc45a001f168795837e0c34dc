@@ -1,5 +1,0 @@
-package com.wipro.flightms.exception;
-
-public class GlobalExceptionHandler {
-
-}
