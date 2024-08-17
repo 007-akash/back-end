@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.wipro.paymentms.kafkaservice.KafkaListener&apos; to &apos;KafkaClient&apos;&#x0D;&#x0A;- Original project: &apos;payment-service&apos;&#x0D;&#x0A;- Original element: &apos;com.wipro.paymentms.kafkaservice.KafkaListener&apos;&#x0D;&#x0A;- Renamed element: &apos;com.wipro.paymentms.kafkaservice.KafkaClient&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;KafkaListener&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.wipro.paymentms.kafkaservice{KafkaListener.java[KafkaListener" matchStrategy="1" name="KafkaClient" qualified="false" references="true" similarDeclarations="false" stamp="1723376299091" textual="false" version="1.0"/>
+</session>

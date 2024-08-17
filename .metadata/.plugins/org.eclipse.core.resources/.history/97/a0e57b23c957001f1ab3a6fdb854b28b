@@ -1,0 +1,20 @@
+package com.wipro.bookingms.kafkaservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.wipro.bookingms.entity.Booking;
+import com.wipro.bookingms.service.BookingService;
+
+@Service
+public class KafkaListener {
+
+	/*
+	 * @Autowired private BookingService bookingService;
+	 * 
+	 * @org.springframework.kafka.annotation.KafkaListener(topics = "payment-topic",
+	 * groupId = "booking-group") public void listenPaymentStatus(Booking booking) {
+	 * bookingService.updateBookingStatus(booking.getBookingId(),
+	 * booking.getStatus()); }
+	 */
+}

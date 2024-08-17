@@ -1,0 +1,5 @@
+package com.wipro.flightms.model;
+
+public class FlightFilterRequest {
+
+}

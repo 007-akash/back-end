@@ -1,0 +1,5 @@
+package com.wipro.bookingms.model;
+
+public class BookingResponse {
+
+}

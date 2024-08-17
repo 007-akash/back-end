@@ -1,0 +1,5 @@
+package com.wipro.bookingms.serializer;
+
+public class BookingSerailizer {
+
+}

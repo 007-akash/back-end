@@ -1,0 +1,5 @@
+package com.wipro.paymentms.serial;
+
+public class PaymentSerializer {
+
+}

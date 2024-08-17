@@ -1,0 +1,60 @@
+package com.wipro.bookingms.serializer;
+
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.time.ZoneOffset;
+import java.util.Map;
+
+import org.apache.kafka.common.serialization.Serializer;
+
+import com.wipro.bookingms.entity.Booking;
+
+public class BookingSerailizer implements Serializer<Booking> {
+
+    @Override
+    public void configure(Map<String, ?> configs, boolean isKey) {
+        // Configuration if needed
+    }
+
+    @Override
+    public byte[] serialize(String topic, Booking data) {
+    	if (data == null) {
+            return null;
+        }
+
+        byte[] bookingIdBytes = data.getBookingId().getBytes(StandardCharsets.UTF_8);
+        byte[] flightIdBytes = data.getFlightId().getBytes(StandardCharsets.UTF_8);
+        byte[] userIdBytes = data.getUserId().getBytes(StandardCharsets.UTF_8);
+        byte[] statusBytes = data.getStatus().getBytes(StandardCharsets.UTF_8);
+
+        ByteBuffer buffer = ByteBuffer.allocate(
+            4 + bookingIdBytes.length +
+            4 + flightIdBytes.length +
+            4 + userIdBytes.length +
+            8 +  // Long requires 8 bytes
+            4 + statusBytes.length
+        );
+
+        buffer.putInt(bookingIdBytes.length);
+        buffer.put(bookingIdBytes);
+
+        buffer.putInt(flightIdBytes.length);
+        buffer.put(flightIdBytes);
+
+        buffer.putInt(userIdBytes.length);
+        buffer.put(userIdBytes);
+
+        buffer.putLong(data.getBookingTime().toEpochSecond(ZoneOffset.UTC));  // Serialize as epoch seconds
+
+        buffer.putInt(statusBytes.length);
+        buffer.put(statusBytes);
+
+        return buffer.array();
+    }
+
+    @Override
+    public void close() {
+        // Cleanup if needed
+    }
+
+}

@@ -1,0 +1,33 @@
+package com.wipro.bookingms.model;
+
+public class Flights {
+	private Long id;
+	private String aircraftName;
+	private String flightNumber;
+	private Location source;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getAircraftName() {
+		return aircraftName;
+	}
+	public void setAircraftName(String aircraftName) {
+		this.aircraftName = aircraftName;
+	}
+	public String getFlightNumber() {
+		return flightNumber;
+	}
+	public void setFlightNumber(String flightNumber) {
+		this.flightNumber = flightNumber;
+	}
+	public Location getSource() {
+		return source;
+	}
+	public void setSource(Location source) {
+		this.source = source;
+	}
+
+}
