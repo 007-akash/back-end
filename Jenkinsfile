@@ -5,7 +5,7 @@ pipeline {
         stage('Config Service') {
             steps {
                 dir('configserver-service') {
-                    withMaven(maven : 'M2_HOME')   {
+                    withMaven(maven : 'MAVEN_HOME')   {
                         bat 'mvn clean install'
                     }
                 }
