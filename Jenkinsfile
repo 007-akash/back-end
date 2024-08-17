@@ -64,17 +64,4 @@ pipeline {
         }
     }
     
-    post {
-        always {
-            // Archive the test results and any other relevant artifacts
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-            junit '**/target/surefire-reports/*.xml'
-        }
-        failure {
-            echo 'Build or tests failed!'
-        }
-        success {
-            echo 'Build and tests succeeded!'
-        }
-    }
 }
