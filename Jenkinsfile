@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    tools{
+        maven : 'Maven'
+    }
 
     stages { 
         stage('Start Config Service') {
