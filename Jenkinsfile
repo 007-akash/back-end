@@ -7,7 +7,6 @@ pipeline {
 
     environment {
         CONFIG_SERVER_URL = 'http://localhost:8888'
-        SERVICES = ["flight-service", "booking-service", "payment-service"]
     }
 
     stages { 
@@ -27,7 +26,8 @@ pipeline {
             steps {
                 script {
                     // Fetch configuration from Config Server
-                    SERVICES.each { service ->
+                    def services = ["flight-service", "booking-service", "payment-service"]
+                    services.each { service ->
                         sh "curl -o ${service}-config.json ${CONFIG_SERVER_URL}/${service}/default"
                     }
                 }
