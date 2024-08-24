@@ -6,9 +6,8 @@ pipeline {
     }
 
     environment {
-        SPRING_DATASOURCE_URL = 'jdbc:mysql://localhost:3306/flight_booking_db'
-        SPRING_DATASOURCE_USERNAME = 'root'
-        SPRING_DATASOURCE_PASSWORD = 'root'
+        CONFIG_SERVER_URL = 'http://localhost:8888'
+        SERVICES = ['flight-service', 'booking-service', 'payment-service']
     }
 
     stages { 
@@ -24,59 +23,68 @@ pipeline {
                 }
             }
         }
-
+        stage('Fetch Configuration') {  
+            steps {
+                script {
+                    // Fetch configuration from Config Server
+                    SERVICES.each { service ->
+                        sh "curl -o ${service}-config.json ${CONFIG_SERVER_URL}/${service}/default"
+                    }
+                }
+            }
+        }
         stage('Parallel Stages') {
             parallel {
-            stage('Service Registry') {
-                steps {
-                    dir('service-registry') {
-                        script {
-                            sh 'mvn clean install'
+                stage('Service Registry') {
+                    steps {
+                        dir('service-registry') {
+                            script {
+                                sh 'mvn clean install'
+                            }
                         }
                     }
                 }
-            }
 
 
-            stage('Build and Test Flight MicroService') {
-                steps {
-                    dir('flight-service') {
-                        script {
-                            sh 'mvn clean install'
+                stage('Build and Test Flight MicroService') {
+                    steps {
+                        dir('flight-service') {
+                            script {
+                                sh 'mvn clean install -Dspring.config.location=flight-service-config.json'
+                            }
                         }
                     }
                 }
-            }
-            
-            stage('Build and Test Booking MicroService') {
-                steps {
-                    dir('booking-service') {
-                        script {
-                            sh 'mvn clean install'
+                
+                stage('Build and Test Booking MicroService') {
+                    steps {
+                        dir('booking-service') {
+                            script {
+                                sh 'mvn clean install -Dspring.config.location=booking-service-config.json'
+                            }
                         }
                     }
                 }
-            }
-            
-            stage('Build and Test Payment MicroService') {
-                steps {
-                    dir('payment-microservice') {
-                        script {
-                            sh 'mvn clean install'
+                
+                stage('Build and Test Payment MicroService') {
+                    steps {
+                        dir('payment-microservice') {
+                            script {
+                                sh 'mvn clean install -Dspring.config.location=payment-service-config.json'
+                            }
                         }
                     }
                 }
-            }
 
-            stage('API Gateway') {
-                steps {
-                    dir('api-gateway') {
-                        script {
-                            sh 'mvn clean install'
+                stage('API Gateway') {
+                    steps {
+                        dir('api-gateway') {
+                            script {
+                                sh 'mvn clean install'
+                            }
                         }
                     }
                 }
-            }
             }
         }
     }
