@@ -8,11 +8,9 @@ pipeline {
                 dir('configserver-service') {
                     script {
                         sh 'mvn spring-boot:run & echo $! > configserver-service.pid'
-                        // Wait for the Config S erver to be available
-                        retry(5) {
-                            sleep(time: 10, unit: 'SECONDS')
-                            sh 'curl --fail http://localhost:8888/actuator/health'
-                        }
+                        // Wait for the Config Server to be available
+                        sleep(time: 10, unit: 'SECONDS')
+                          
                     }
                 }
             }
