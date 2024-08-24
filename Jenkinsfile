@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         CONFIG_SERVER_URL = 'http://localhost:8888'
-        SERVICES = ['flight-service', 'booking-service', 'payment-service']
+        SERVICES = ["flight-service", "booking-service", "payment-service"]
     }
 
     stages { 
