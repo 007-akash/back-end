@@ -7,11 +7,11 @@ pipeline {
             steps {
                 dir('configserver-service') {
                     script {
-                        bat 'mvn spring-boot:run & echo $! > configserver-service.pid'
+                        sh 'mvn spring-boot:run & echo $! > configserver-service.pid'
                         // Wait for the Config S erver to be available
                         retry(5) {
                             sleep(time: 10, unit: 'SECONDS')
-                            bat 'curl --fail http://localhost:8888/actuator/health'
+                            sh 'curl --fail http://localhost:8888/actuator/health'
                         }
                     }
                 }
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 dir('service-registry') {
                     script {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 dir('flight-service') {
                     script {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 dir('booking-service') {
                     script {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
@@ -53,7 +53,7 @@ pipeline {
             steps {
                 dir('payment-microservice') {
                     script {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
@@ -63,7 +63,7 @@ pipeline {
             steps {
                 dir('api-gateway') {
                     script {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     }
                 }
             }
@@ -77,7 +77,7 @@ pipeline {
                     script {
                         dir('configserver-service') {
                             // Stop the ConfigServer Service using the stored PID
-                            bat 'kill $(cat configserver-service.pid)'
+                            sh 'kill $(cat configserver-service.pid)'
                         }
                     }
         }
