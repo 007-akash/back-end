@@ -10,18 +10,7 @@ pipeline {
     }
 
     stages { 
-        stage('Start Config Service') {
-            steps {
-                dir('configserver-service') {
-                    script {
-                        sh 'mvn spring-boot:run & echo $! > configserver-service.pid'
-                        // Wait for the Config Server to be available
-                        sleep(time: 10, unit: 'SECONDS')
-                          
-                    }
-                }
-            }
-        }
+       
         stage('Fetch Configuration') {  
             steps {
                 script {
@@ -93,16 +82,7 @@ pipeline {
     post {
         always {
 
-                    script {
-                        dir('configserver-service') {
-                            // Stop the ConfigServer Service using the stored PID
-                            sh '''
-                    if [ -f configserver-service.pid ]; then
-                        kill $(cat configserver-service.pid) && rm configserver-service.pid
-                    fi
-                    '''
-                        }
-                    }
+                   echo 'Success'
         }
         failure {
             echo 'Build or tests failed!'
