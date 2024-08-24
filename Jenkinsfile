@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        CONFIG_SERVER_URL = 'http://localhost:8888'
+        CONFIG_SERVER_URL = 'http://configserver-service:8888'
     }
 
     stages { 
