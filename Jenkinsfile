@@ -19,6 +19,8 @@ pipeline {
                     services.each { service ->
                         sh "curl --verbose -o ${service}-config.json ${CONFIG_SERVER_URL}/${service}/default"
                     }
+                    services.each { service ->
+                        sh "ls -l ${service}-config.json"
                 }
             }
         }
