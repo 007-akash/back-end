@@ -73,16 +73,13 @@ pipeline {
 
     post {
         always {
-            stage('Stop Config Server') {
-                steps {
+
                     script {
                         dir('configserver-service') {
                             // Stop the ConfigServer Service using the stored PID
                             bat 'kill $(cat configserver-service.pid)'
                         }
                     }
-                }
-            }
         }
         failure {
             echo 'Build or tests failed!'
