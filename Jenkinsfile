@@ -5,26 +5,8 @@ pipeline {
         maven 'Maven'
     }
 
-    environment {
-        CONFIG_SERVER_URL = 'http://host.docker.internal:8888'
-    }
-
     stages { 
-       
-        stage('Fetch Configuration') {  
-            steps {
-                script {
-                    // Fetch configuration from Config Server
-                    def services = ["flight-service", "booking-service", "payment-service"]
-                    services.each { service ->
-                        sh "curl --verbose -o ${service}-config.json ${CONFIG_SERVER_URL}/${service}/default"
-                    }
-                    services.each { service ->
-                        sh "ls -l ${service}-config.json"
-                    }
-                }
-            }
-        }
+
         stage('Parallel Stages') {
             parallel {
                 stage('Service Registry') {
@@ -42,7 +24,7 @@ pipeline {
                     steps {
                         dir('flight-service') {
                             script {
-                                sh 'mvn clean install -Dspring.profiles.active=build'
+                                sh 'mvn clean install'
                             }
                         }
                     }
@@ -52,7 +34,7 @@ pipeline {
                     steps {
                         dir('booking-service') {
                             script {
-                                sh 'mvn clean install -Dspring.profiles.active=build'
+                                sh 'mvn clean install'
                             }
                         }
                     }
@@ -62,7 +44,7 @@ pipeline {
                     steps {
                         dir('payment-service') {
                             script {
-                                sh 'mvn clean install -Dspring.profiles.active=build'
+                                sh 'mvn clean install'
                             }
                         }
                     }
@@ -85,7 +67,7 @@ pipeline {
     post {
         always {
 
-                   echo 'Success'
+            echo 'Build Success'
         }
         failure {
             echo 'Build or tests failed!'
