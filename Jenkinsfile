@@ -68,7 +68,7 @@ pipeline {
                 
                 stage('Build and Test Payment MicroService') {
                     steps {
-                        dir('payment-microservice') {
+                        dir('payment-service') {
                             script {
                                 sh 'mvn clean install -Dspring.config.location=payment-service-config.json'
                             }
