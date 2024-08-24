@@ -21,6 +21,7 @@ pipeline {
                     }
                     services.each { service ->
                         sh "ls -l ${service}-config.json"
+                    }
                 }
             }
         }
