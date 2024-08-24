@@ -69,25 +69,20 @@ pipeline {
             }
         }
     }
-    
-    finally {
-        stage('Stop Config Server') {
-            steps {
-                script {
-                    dir('configserver-service') {
-                        // Stop the ConfigServer Service using the stored PID
-                        sh 'kill $(cat configserver-service.pid)'
-                    }
-                }
-            }
-        }
-    }
+
 
     post {
         always {
-            // Archive the test results and any other relevant artifacts
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-            junit '**/target/surefire-reports/*.xml'
+            stage('Stop Config Server') {
+                steps {
+                    script {
+                        dir('configserver-service') {
+                            // Stop the ConfigServer Service using the stored PID
+                            bat 'kill $(cat configserver-service.pid)'
+                        }
+                    }
+                }
+            }
         }
         failure {
             echo 'Build or tests failed!'
