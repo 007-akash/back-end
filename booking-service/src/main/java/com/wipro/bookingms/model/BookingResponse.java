@@ -4,6 +4,7 @@ public class BookingResponse {
 	private boolean status;
 	private String message;
 	private String bookingId;
+	private String bookingStatus;
 	public boolean isStatus() {
 		return status;
 	}
@@ -21,6 +22,12 @@ public class BookingResponse {
 	}
 	public void setBookingId(String bookingId) {
 		this.bookingId = bookingId;
+	}
+	public String getBookingStatus() {
+		return bookingStatus;
+	}
+	public void setBookingStatus(String bookingStatus) {
+		this.bookingStatus = bookingStatus;
 	}
 	
 }

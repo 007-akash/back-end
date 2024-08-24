@@ -21,4 +21,10 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>("Unexpected Error", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@ExceptionHandler(IllegalArgumentException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e){
+		return new ResponseEntity<>("Bad Request", HttpStatus.BAD_REQUEST);
+	}
+
 }

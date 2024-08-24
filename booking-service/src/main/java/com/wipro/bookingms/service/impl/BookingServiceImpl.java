@@ -1,5 +1,7 @@
 package com.wipro.bookingms.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -54,8 +56,6 @@ public class BookingServiceImpl implements BookingService{
         if(!ObjectUtils.isEmpty(updatedBooking)) {
 			bookingResponse.setMessage(updatedBooking.getStatus() + " status is Upated");
 			bookingResponse.setStatus(true);
-			
-			System.out.println("Bookng Success");
 		}
 		else {
 			bookingResponse.setMessage("Update Booking Failed");
@@ -71,8 +71,27 @@ public class BookingServiceImpl implements BookingService{
 
 	@Override
 	public BookingResponse getBooking(Long bookingId) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Booking> booking = bookingRepository.findById(bookingId);
+		BookingResponse bookingResponse = new BookingResponse();
+		if(booking.isPresent()) {
+			bookingResponse.setBookingId(String.valueOf(bookingId));
+			bookingResponse.setMessage("");
+			bookingResponse.setStatus(true);
+		}
+		else {
+			throw new ResourceNotFoundException("No Booking Id : " + bookingId);
+		}
+		return bookingResponse;
 	}
 
+	
+	@Override
+	public BookingResponse getBookingStatus(Long bookingId) {
+		Booking booking = bookingRepository.findById(bookingId).orElseThrow(()-> new ResourceNotFoundException("No Booking Id : " + bookingId));
+		BookingResponse bookingResponse = new BookingResponse();
+		bookingResponse.setBookingId(String.valueOf(bookingId));
+		bookingResponse.setStatus(true);
+		bookingResponse.setBookingStatus(booking.getStatus());
+		return bookingResponse;
+	}
 }

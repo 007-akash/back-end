@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.wipro.flightms.entity.Flights;
 import com.wipro.flightms.exception.ResourceNotFoundException;
@@ -37,6 +38,9 @@ public class FlightServiceImpl implements FlightService{
 
 	@Override
 	public List<Flights> getFlights(Long source, Long destination, LocalDate date) {
+		if (source == null || destination == null || date == null) {
+	        throw new IllegalArgumentException("Source, destination, and date must not be null");
+	    }
 		return flightRepository.findBySourceIdAndDestinationIdAndTravelDate(source, destination, date);
 	}
 
@@ -97,6 +101,9 @@ public class FlightServiceImpl implements FlightService{
 	}
 
 	private void validateFilter(FlightFilterRequest flightFliterRequest) {
+		if(ObjectUtils.isEmpty(flightFliterRequest)) {
+			throw new ValidationException("Null Request Body");
+		}
 		boolean isMorningDeparture = flightFliterRequest.isMorningDeparture();
 		boolean isEveningDeparture = flightFliterRequest.isEveningDeparture();
 		if (isMorningDeparture && isEveningDeparture)

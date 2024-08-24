@@ -8,4 +8,5 @@ public interface BookingService {
 	BookingResponse createBooking(Booking booking);
     BookingResponse updateBookingStatus(Long bookingId, String status);
 	BookingResponse getBooking(Long bookingId);
+	BookingResponse getBookingStatus(Long bookingId);
 }

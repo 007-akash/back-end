@@ -1,23 +1,18 @@
 pipeline {
     agent any
-    
-    environment {
-        JAVA_HOME = tool name: 'JDK 17', type: 'jdk'
-    }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the code from your Git
-                git url: 'https://github.com/007-akash/back-end.git', branch: 'main'
-            }
-        }
-        
-        stage('Config Service') {
+
+    stages { 
+        stage('Start Config Service') {
             steps {
                 dir('configserver-service') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn spring-boot:run & echo $! > configserver-service.pid'
+                        // Wait for the Config S erver to be available
+                        retry(5) {
+                            sleep(time: 10, unit: 'SECONDS')
+                            bat 'curl --fail http://localhost:8888/actuator/health'
+                        }
                     }
                 }
             }
@@ -27,7 +22,7 @@ pipeline {
             steps {
                 dir('service-registry') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
@@ -38,7 +33,7 @@ pipeline {
             steps {
                 dir('flight-service') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
@@ -48,7 +43,7 @@ pipeline {
             steps {
                 dir('booking-service') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
@@ -58,7 +53,7 @@ pipeline {
             steps {
                 dir('payment-microservice') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
@@ -68,13 +63,26 @@ pipeline {
             steps {
                 dir('api-gateway') {
                     script {
-                        sh 'mvn clean install'
+                        bat 'mvn clean install'
                     }
                 }
             }
         }
     }
     
+    finally {
+        stage('Stop Config Server') {
+            steps {
+                script {
+                    dir('configserver-service') {
+                        // Stop the ConfigServer Service using the stored PID
+                        sh 'kill $(cat configserver-service.pid)'
+                    }
+                }
+            }
+        }
+    }
+
     post {
         always {
             // Archive the test results and any other relevant artifacts

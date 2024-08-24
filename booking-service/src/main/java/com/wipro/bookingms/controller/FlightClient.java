@@ -16,7 +16,7 @@ import com.wipro.bookingms.model.Flights;
 import com.wipro.bookingms.model.Location;
 
 
-@FeignClient(name="flight-service")
+@FeignClient(name="flight-service", fallback = FallBackFlightController.class)
 public interface FlightClient {
 	
 	@GetMapping("/api/flights")
