@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        CONFIG_SERVER_URL = 'http://configserver-service:8888'
+        CONFIG_SERVER_URL = 'http://host.docker.internal:8888'
     }
 
     stages { 
@@ -28,7 +28,7 @@ pipeline {
                     // Fetch configuration from Config Server
                     def services = ["flight-service", "booking-service", "payment-service"]
                     services.each { service ->
-                        sh "curl -o ${service}-config.json ${CONFIG_SERVER_URL}/${service}/default"
+                        sh "curl --verbose -o ${service}-config.json ${CONFIG_SERVER_URL}/${service}/default"
                     }
                 }
             }
