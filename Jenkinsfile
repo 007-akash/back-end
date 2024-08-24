@@ -42,7 +42,7 @@ pipeline {
                     steps {
                         dir('flight-service') {
                             script {
-                                sh 'mvn clean install -Dspring.config.location=flight-service-config.json'
+                                sh 'mvn clean install -Dspring.profiles.active=build'
                             }
                         }
                     }
@@ -52,7 +52,7 @@ pipeline {
                     steps {
                         dir('booking-service') {
                             script {
-                                sh 'mvn clean install -Dspring.config.location=booking-service-config.json'
+                                sh 'mvn clean install -Dspring.profiles.active=build'
                             }
                         }
                     }
@@ -62,7 +62,7 @@ pipeline {
                     steps {
                         dir('payment-service') {
                             script {
-                                sh 'mvn clean install -Dspring.config.location=payment-service-config.json'
+                                sh 'mvn clean install -Dspring.profiles.active=build'
                             }
                         }
                     }
